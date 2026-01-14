@@ -1,0 +1,3 @@
+﻿Old Steps,New Steps,xpath
+SFClick on the 'Shopping Cart',SFClick on the 'Ranjeet Testing',//*
+SFClick on the 'Checkout',SFClick on the 'Ranjeet Testing',//*

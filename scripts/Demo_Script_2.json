@@ -1,0 +1,351 @@
+{
+  "testcaseName" : "Demo_Script_2",
+  "testCaseDesc" : null,
+  "userName" : "admin",
+  "datasetList" : [ {
+    "selected" : "false",
+    "url" : "https://www.saucedemo.com/",
+    "UserName" : "standard_user",
+    "password" : "dglfgucm6wlzXEQm75DjgwIMxWgkXBa5FaKcjpMS5Cs=",
+    "firstName" : "Ranjeet",
+    "lastName" : "Kumar",
+    "postalCode" : "412101",
+    "Thank_you_for_your_order!~~2" : "Thank you for your order!",
+    "default" : "true"
+  }, {
+    "selected" : "false",
+    "url" : "https://www.saucedemo.com/",
+    "UserName" : "standard_user",
+    "password" : "dglfgucm6wlzXEQm75DjgwIMxWgkXBa5FaKcjpMS5Cs=",
+    "firstName" : "Ranjeet1",
+    "lastName" : "Kumar1",
+    "postalCode" : "412101",
+    "Thank_you_for_your_order!~~2" : "Thank you for your order!",
+    "default" : "false"
+  }, {
+    "selected" : "false",
+    "url" : "https://www.saucedemo.com/",
+    "UserName" : "standard_user",
+    "password" : "dglfgucm6wlzXEQm75DjgwIMxWgkXBa5FaKcjpMS5Cs=",
+    "firstName" : "Ranjeet2",
+    "lastName" : "Kumar2",
+    "postalCode" : "412101",
+    "Thank_you_for_your_order!~~2" : "Thank you for your order!",
+    "default" : "false"
+  } ],
+  "objectsMap" : {
+    "UserName" : {
+      "id" : "user-name",
+      "name" : "user-name",
+      "xpath" : "/html/body/div/div/div[2]/div[1]/div/div/form/div[1]/input",
+      "relXpath" : "//input[@id='user-name']"
+    },
+    "password" : {
+      "id" : "password",
+      "name" : "password",
+      "xpath" : "/html/body/div/div/div[2]/div[1]/div/div/form/div[2]/input",
+      "relXpath" : "//*[@id='password']"
+    },
+    "Login_Button" : {
+      "id" : "login-button",
+      "name" : "login-button",
+      "xpath" : "/html/body/div/div/div[2]/div[1]/div/div/form/input",
+      "relXpath" : "//input[@id='login-button']"
+    },
+    "Add_to_cart_-_Sauce_Labs_Backpack" : {
+      "id" : "add-to-cart-sauce-labs-backpack",
+      "name" : "add-to-cart-sauce-labs-backpack",
+      "xpath" : "/html/body/div/div/div/div[2]/div/div/div/div[1]/div[2]/div[2]/button",
+      "relXpath" : "//button[@id='add-to-cart-sauce-labs-backpack']"
+    },
+    "Add_to_cart_-_Sauce_Labs_Bike_Light" : {
+      "id" : "add-to-cart-sauce-labs-bike-light",
+      "name" : "add-to-cart-sauce-labs-bike-light",
+      "xpath" : "/html/body/div/div/div/div[2]/div/div/div/div[2]/div[2]/div[2]/button",
+      "relXpath" : "//button[@id='add-to-cart-sauce-labs-bike-light']"
+    },
+    "Shopping_Cart" : {
+      "id" : "",
+      "name" : "",
+      "xpath" : "/html/body/div/div/div/div[1]/div[1]/div[3]/a",
+      "relXpath" : "//a[@class='shopping_cart_link']"
+    },
+    "Checkout" : {
+      "id" : "checkout",
+      "name" : "checkout",
+      "xpath" : "/html/body/div/div/div/div[2]/div/div[2]/button[2]",
+      "relXpath" : "//button[@id='checkout']"
+    },
+    "firstName" : {
+      "id" : "first-name",
+      "name" : "firstName",
+      "xpath" : "/html/body/div/div/div/div[2]/div/form/div[1]/div[1]/input",
+      "relXpath" : "//input[@id='first-name']"
+    },
+    "lastName" : {
+      "id" : "last-name",
+      "name" : "lastName",
+      "xpath" : "/html/body/div/div/div/div[2]/div/form/div[1]/div[2]/input",
+      "relXpath" : "//input[@id='last-name']"
+    },
+    "postalCode" : {
+      "id" : "postal-code",
+      "name" : "postalCode",
+      "xpath" : "/html/body/div/div/div/div[2]/div/form/div[1]/div[3]/input",
+      "relXpath" : "//input[@id='postal-code']"
+    },
+    "Continue" : {
+      "id" : "continue",
+      "name" : "continue",
+      "xpath" : "/html/body/div/div/div/div[2]/div/form/div[2]/input",
+      "relXpath" : "//input[@id='continue']"
+    },
+    "Finish" : {
+      "id" : "finish",
+      "name" : "finish",
+      "xpath" : "/html/body/div/div/div/div[2]/div/div[2]/div[9]/button[2]",
+      "relXpath" : "//button[@id='finish']"
+    },
+    "Thank_you_for_your_order!" : {
+      "id" : "",
+      "name" : "",
+      "xpath" : "/html/body/div/div/div/div[2]/h2",
+      "relXpath" : "//h2[@class='complete-header']"
+    },
+    "Thank_you_for_your_order!~~2" : {
+      "id" : "",
+      "name" : "",
+      "xpath" : "/html/body/div/div/div/div[2]/h2",
+      "relXpath" : "//h2[@class='complete-header']"
+    }
+  },
+  "eventsList" : [ {
+    "stepNo" : 0,
+    "stepId" : "bN00eRycFQSiYICiUZ8T",
+    "action" : "LAUNCH",
+    "data" : "${url}",
+    "locator" : "url",
+    "displayName" : "'url'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "launch",
+    "line" : "Launch the application with url @data@1",
+    "selfHealingName" : "'url'"
+  }, {
+    "stepNo" : 1,
+    "stepId" : "xx8a4JicHL6RV396bEXF",
+    "action" : "SFINPUT",
+    "data" : "${UserName}",
+    "locator" : "UserName",
+    "displayName" : "'UserName'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfenter",
+    "line" : "SFEnter the 'UserName' as @data@2",
+    "selfHealingName" : "'user-name'"
+  }, {
+    "stepNo" : 2,
+    "stepId" : "0W7JbH2pzevMbXVjWyQU",
+    "action" : "SECURE_INPUT",
+    "data" : "${password}",
+    "locator" : "password",
+    "displayName" : "'password'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "secure",
+    "line" : "Secure enter the 'password' as @data@3",
+    "selfHealingName" : "'password'"
+  }, {
+    "stepNo" : 3,
+    "stepId" : "fF6B95xkpsaHAEIRnnvU",
+    "action" : "SFCLICK",
+    "data" : "",
+    "locator" : "Login_Button",
+    "displayName" : "'Login Button'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfclick",
+    "line" : "SFClick on the 'Login Button'",
+    "selfHealingName" : "'login-button'"
+  }, {
+    "stepNo" : 4,
+    "stepId" : "heMRSlmrcSTOxLoygNRK",
+    "action" : "SFCLICK",
+    "data" : "",
+    "locator" : "Add_to_cart_-_Sauce_Labs_Backpack",
+    "displayName" : "'Add to cart - Sauce Labs Backpack'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfclick",
+    "line" : "SFClick on the 'Add to cart - Sauce Labs Backpack'",
+    "selfHealingName" : "'add-to-cart-sauce-labs-backpack'"
+  }, {
+    "stepNo" : 5,
+    "stepId" : "ZzsUlORpqG2MiSU54Qtn",
+    "action" : "SFCLICK",
+    "data" : "",
+    "locator" : "Add_to_cart_-_Sauce_Labs_Bike_Light",
+    "displayName" : "'Add to cart - Sauce Labs Bike Light'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfclick",
+    "line" : "SFClick on the 'Add to cart - Sauce Labs Bike Light'",
+    "selfHealingName" : "'add-to-cart-sauce-labs-bike-light'"
+  }, {
+    "stepNo" : 6,
+    "stepId" : "FPcl4ddpVWyi0jxY7RK2",
+    "action" : "SFCLICK",
+    "data" : "",
+    "locator" : "Shopping_Cart",
+    "displayName" : "'Shopping Cart'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfclick",
+    "line" : "SFClick on the 'Shopping Cart'",
+    "selfHealingName" : "'shopping-cart'"
+  }, {
+    "stepNo" : 7,
+    "stepId" : "PYgXi1skSC13iuTGDVmG",
+    "action" : "SFCLICK",
+    "data" : "",
+    "locator" : "Checkout",
+    "displayName" : "'Checkout'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfclick",
+    "line" : "SFClick on the 'Checkout'",
+    "selfHealingName" : "'checkout'"
+  }, {
+    "stepNo" : 8,
+    "stepId" : "AVumTDajd7poSdoxejpV",
+    "action" : "SFINPUT",
+    "data" : "${firstName}",
+    "locator" : "firstName",
+    "displayName" : "'firstName'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfenter",
+    "line" : "SFEnter the 'firstName' as @data@4",
+    "selfHealingName" : "'firstName'"
+  }, {
+    "stepNo" : 9,
+    "stepId" : "jyro3iqLrIdWrF6rHMv7",
+    "action" : "SFINPUT",
+    "data" : "${lastName}",
+    "locator" : "lastName",
+    "displayName" : "'lastName'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfenter",
+    "line" : "SFEnter the 'lastName' as @data@5",
+    "selfHealingName" : "'lastName'"
+  }, {
+    "stepNo" : 10,
+    "stepId" : "teQofdkkmepsW06oXzUP",
+    "action" : "SFINPUT",
+    "data" : "${postalCode}",
+    "locator" : "postalCode",
+    "displayName" : "'postalCode'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfenter",
+    "line" : "SFEnter the 'postalCode' as @data@6",
+    "selfHealingName" : "'postalCode'"
+  }, {
+    "stepNo" : 11,
+    "stepId" : "1H2GDMA3RffAu0iIF62I",
+    "action" : "SFCLICK",
+    "data" : "",
+    "locator" : "Continue",
+    "displayName" : "'Continue'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfclick",
+    "line" : "SFClick on the 'Continue'",
+    "selfHealingName" : "'continue'"
+  }, {
+    "stepNo" : 12,
+    "stepId" : "un8XyWEytvpYO1p8u0tZ",
+    "action" : "SFCLICK",
+    "data" : "",
+    "locator" : "Finish",
+    "displayName" : "'Finish'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfclick",
+    "line" : "SFClick on the 'Finish'",
+    "selfHealingName" : "'finish'"
+  }, {
+    "stepNo" : 13,
+    "stepId" : "73ck0jXzUbbAv6Y7kgMm",
+    "action" : "SFCLICK",
+    "data" : "",
+    "locator" : "Thank_you_for_your_order!",
+    "displayName" : "'Thank you for your order!'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "sfclick",
+    "line" : "SFClick on the 'Thank you for your order!'",
+    "selfHealingName" : "'Thank you for your order!'"
+  }, {
+    "stepNo" : 14,
+    "stepId" : "5hS2tF5uoZvMF9aeCoIJ",
+    "action" : "VERIFYTEXT",
+    "data" : "${Thank_you_for_your_order!~~2}",
+    "locator" : "Thank_you_for_your_order!~~2",
+    "displayName" : "'Thank you for your order!'",
+    "scroll" : "false",
+    "skip" : "false",
+    "userActionWord" : "verify",
+    "line" : "Verify if the 'Thank you for your order!' text has @data@7",
+    "selfHealingName" : "'Thank you for your order!'"
+  } ],
+  "steps" : [ {
+    "stepNo" : 0,
+    "description" : "Launch the application with url \"${url}\""
+  }, {
+    "stepNo" : 1,
+    "description" : "SFEnter the 'UserName' as \"${UserName}\""
+  }, {
+    "stepNo" : 2,
+    "description" : "Secure enter the 'password' as \"${password}\""
+  }, {
+    "stepNo" : 3,
+    "description" : "SFClick on the 'Sign in Button'"
+  }, {
+    "stepNo" : 4,
+    "description" : "SFClick on the 'Add to cart - Sauce Labs Backpack'"
+  }, {
+    "stepNo" : 5,
+    "description" : "SFClick on the 'Add to cart - Sauce Labs Bike Light'"
+  }, {
+    "stepNo" : 6,
+    "description" : "SFClick on the 'Shopping Cart'"
+  }, {
+    "stepNo" : 7,
+    "description" : "SFClick on the 'Checkout'"
+  }, {
+    "stepNo" : 8,
+    "description" : "SFEnter the 'firstName' as \"${firstName}\""
+  }, {
+    "stepNo" : 9,
+    "description" : "SFEnter the 'lastName' as \"${lastName}\""
+  }, {
+    "stepNo" : 10,
+    "description" : "SFEnter the 'postalCode' as \"${postalCode}\""
+  }, {
+    "stepNo" : 11,
+    "description" : "SFClick on the 'Continue'"
+  }, {
+    "stepNo" : 12,
+    "description" : "SFClick on the 'Finish'"
+  }, {
+    "stepNo" : 13,
+    "description" : "SFClick on the 'Thank you for your order!'"
+  }, {
+    "stepNo" : 14,
+    "description" : "Verify if the 'Thank you for your order!' text has \"${Thank_you_for_your_order!~~2}\""
+  } ],
+  "scriptType" : "UI",
+  "secureDataList" : [ "password" ]
+}
