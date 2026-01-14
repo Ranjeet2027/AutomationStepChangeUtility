@@ -22,6 +22,14 @@ public class AutomationStepChangeUtility {
         try {
             createCsvIfMissing();
             List<Replacement> replacements = loadReplacements();
+            Map<String, Queue<Replacement>> replacementMap = new LinkedHashMap<>();
+
+            for (Replacement r : replacements) {
+                replacementMap
+                    .computeIfAbsent(r.oldStep.trim(), k -> new LinkedList<>())
+                    .add(r);
+            }
+
 
             if (replacements.isEmpty()) {
                 System.out.println("No step replacements found. Exiting.");
@@ -33,7 +41,7 @@ public class AutomationStepChangeUtility {
 
             Files.list(Paths.get(SCRIPTS_DIR))
                     .filter(path -> path.toString().endsWith(".json"))
-                    .forEach(scriptFile -> processScript(scriptFile, mapper, replacements, modifiedScripts));
+                    .forEach(scriptFile -> processScript(scriptFile, mapper, replacementMap, modifiedScripts));
 
             generateLog(modifiedScripts);
             System.out.println("Automation Step Change Utility executed successfully.");
@@ -47,8 +55,9 @@ public class AutomationStepChangeUtility {
     }
 
     private static void processScript(Path scriptFile, ObjectMapper mapper,
-                                      List<Replacement> replacements,
-                                      Set<String> modifiedScripts) {
+                                  Map<String, Queue<Replacement>> replacementMap,
+                                  Set<String> modifiedScripts) {
+
 
         try {
             JsonNode root = mapper.readTree(scriptFile.toFile());
@@ -58,12 +67,18 @@ public class AutomationStepChangeUtility {
             for (JsonNode step : steps) {
                 String description = step.get("description").asText();
 
-                for (Replacement r : replacements) {
-                    if (description.trim().equals(r.oldStep.trim())) {
+                String key = description.trim();
+
+                if (replacementMap.containsKey(key)) {
+                    Queue<Replacement> queue = replacementMap.get(key);
+
+                    if (!queue.isEmpty()) {
+                        Replacement r = queue.poll(); // 🔑 consume one replacement only
                         ((ObjectNode) step).put("description", r.newStep);
                         updated = true;
                     }
                 }
+
             }
 
             if (updated) {
@@ -78,17 +93,17 @@ public class AutomationStepChangeUtility {
 
     private static void createCsvIfMissing() throws IOException {
 
-        Path csvPath = Paths.get(CSV_FILE);
+        Path csvPath = Paths.get(CSV_FILE); // Check if CSV file exists
 
         if (!Files.exists(csvPath)) {
             try (BufferedWriter writer = Files.newBufferedWriter(csvPath)) {
-                writer.write("Old Steps,New Steps,xpath\n");
+                writer.write("Old Steps,New Steps,Xpath\n");
                 writer.write("<<OLD STEP HERE>>,<<NEW STEP HERE>>,<<XPATH HERE>>\n");
             }
 
             System.out.println(
                 "[INFO] step-replacements.csv not found.\n" +
-                "[INFO] A sample CSV has been created. Please update it and re-run the tool."
+                "[INFO] A sample CSV has been created. Please update it and re-run the AutomationStepChangeUtility."
             );
         }
     }
@@ -124,17 +139,17 @@ public class AutomationStepChangeUtility {
 
                     if (!cleanedMap.containsKey("Old Steps")
                             || !cleanedMap.containsKey("New Steps")
-                            || !cleanedMap.containsKey("xpath")) {
+                            || !cleanedMap.containsKey("Xpath")) {
 
                         throw new RuntimeException(
-                            "CSV header must contain: Old Steps, New Steps, xpath"
+                            "CSV header must contain: Old Steps, New Steps, Xpath"
                         );
                     }
 
                     replacements.add(new Replacement(
                             cleanedMap.get("Old Steps"),
                             cleanedMap.get("New Steps"),
-                            cleanedMap.get("xpath")
+                            cleanedMap.get("Xpath")
                     ));
                 }
             }
