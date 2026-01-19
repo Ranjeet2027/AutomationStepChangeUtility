@@ -1,2 +1,8 @@
-com\accenture\automation\ascu\AutomationStepChangeUtility$Replacement.class
+com\accenture\automation\ascu\ScriptProcessor.class
+com\accenture\automation\ascu\CsvLoader.class
+com\accenture\automation\ascu\Replacement.class
+com\accenture\automation\ascu\RelXpathUpdater.class
+com\accenture\automation\ascu\SequenceMatcher.class
+com\accenture\automation\ascu\StepUpdater.class
 com\accenture\automation\ascu\AutomationStepChangeUtility.class
+com\accenture\automation\ascu\LogGenerator.class
