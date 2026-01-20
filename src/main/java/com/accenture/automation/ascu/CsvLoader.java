@@ -10,17 +10,26 @@ public class CsvLoader {
     public static void createCsvIfMissing(String csvFile) throws IOException {
 
         Path path = Paths.get(csvFile);
+
+        System.out.println("[CSV] Checking If CSV File Exists: " + csvFile);
+
         if (!Files.exists(path)) {
+
+            System.out.println("[WARN] CSV File Not Found. Creating A Sample CSV At: " + csvFile);
+
             try (BufferedWriter writer = Files.newBufferedWriter(path)) {
                 writer.write("Old Steps,New Steps,Xpath\n");
-                writer.write("<<OLD STEP HERE>>,<<NEW STEP HERE>>,<<XPATH HERE>>\n");
+                writer.write("<<CURRENT STEP HERE>>,<<NEW STEP HERE>>,<<RELATIVE XPATH HERE>>\n");
             }
-            System.out.println("[INFO] Sample CSV created.");
+            System.out.println("Sample CSV Created Successfully");
+        } else {
+            System.out.println("CSV File Found. Using Existing File");
         }
     }
 
     public static List<Replacement> loadReplacements(String csvFile) throws IOException {
 
+        System.out.println("Loading Replacements From: " + csvFile);
         List<Replacement> list = new ArrayList<>();
 
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFile))) {
@@ -33,8 +42,12 @@ public class CsvLoader {
                     .build();
 
             try (CSVParser parser = format.parse(reader)) {
+
+                //int rowNumber = 1;
+
                 for (CSVRecord record : parser) {
 
+                    //System.out.println("\nProcessing row #" + rowNumber);
                     Map<String, String> cleaned = new HashMap<>();
                     for (Map.Entry<String, String> e : record.toMap().entrySet()) {
                         cleaned.put(
@@ -43,29 +56,31 @@ public class CsvLoader {
                         );
                     }
 
-                    if (!cleaned.containsKey("Old Steps")
+                    if (!cleaned.containsKey("Current Steps")
                             || !cleaned.containsKey("New Steps")
-                            || !cleaned.containsKey("Xpath")) {
+                            || !cleaned.containsKey("Relative Xpath")) {
+                        System.out.println("[CSV][ERROR] Invalid Header Detected In CSV File");
                         throw new RuntimeException(
-                                "CSV header must contain: Old Steps, New Steps, Xpath");
+                                "CSV Header Must Contain: Current Steps, New Steps, Relative Xpath");
                     }
 
-                    if ((cleaned.get("New Steps") == null
-                            || cleaned.get("New Steps").trim().isEmpty())
-                            && (cleaned.get("Xpath") == null
-                            || cleaned.get("Xpath").trim().isEmpty())) {
+                    String currentStep = cleaned.get("Current Steps");
+                    String newStep = cleaned.get("New Steps");
+                    String relativeXpath   = cleaned.get("Relative Xpath");
+
+                    if ((newStep == null || newStep.trim().isEmpty())
+                            && (relativeXpath == null || relativeXpath.trim().isEmpty())) {
+
+                        System.out.println("[CSV][ERROR] Invalid Row Detected In CSV File");
                         throw new RuntimeException(
-                                "Each CSV row must have either New Steps or Xpath");
+                                "CSV Row Must Have Either New Steps or Relative Xpath");
                     }
 
-                    list.add(new Replacement(
-                            cleaned.get("Old Steps"),
-                            cleaned.get("New Steps"),
-                            cleaned.get("Xpath")
-                    ));
+                    list.add(new Replacement(currentStep, newStep, relativeXpath));
                 }
             }
         }
-        return list;
+        System.out.println("\nTotal Replacements Loaded: " + list.size());
+        return list;    
     }
 }

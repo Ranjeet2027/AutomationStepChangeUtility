@@ -1,3 +1,3 @@
-﻿Old Steps,New Steps,Xpath
-SFClick on the 'Checkout',,//*[text()='Ranjeet Kumar']
-SFClick on the 'Shopping Cart',,//*[text()='Ranjeet Kumar']
+﻿Current Steps,New Steps,Relative Xpath
+SFClick on the 'Ranjeet 2',SFClick on the 'Ranjeet 2',(//*)[1]
+SFClick on the 'Ranjeet 3',SFClick on the 'Ranjeet 3',(//*)[1]
