@@ -3,7 +3,6 @@ com\accenture\automation\ascu\CsvLoader.class
 com\accenture\automation\ascu\EventsListBuilder.class
 com\accenture\automation\ascu\ObjectsMapBuilder.class
 com\accenture\automation\ascu\Replacement.class
-com\accenture\automation\ascu\RelXpathUpdater.class
 com\accenture\automation\ascu\SequenceMatcher.class
 com\accenture\automation\ascu\StepUpdater.class
 com\accenture\automation\ascu\ActionResolver.class

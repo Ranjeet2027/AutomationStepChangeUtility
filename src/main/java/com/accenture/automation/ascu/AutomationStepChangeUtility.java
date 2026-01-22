@@ -13,8 +13,6 @@ public class AutomationStepChangeUtility {
     static final String LOG_FILE = "AutomationStepChangeUtilityLog.log";
 
     static AtomicInteger totalRelXpathModified = new AtomicInteger(0);
-
-
     public static void main(String[] args) {
         System.out.println("==================================================");
         System.out.println("  Automation Step Change Utility");

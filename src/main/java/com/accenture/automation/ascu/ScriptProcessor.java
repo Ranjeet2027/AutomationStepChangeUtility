@@ -20,14 +20,10 @@ public class ScriptProcessor {
             System.out.println("----------------------------------------------");
             System.out.println("Processing Script : " + scriptFile.getFileName());
 
-            JsonNode root = mapper.readTree(scriptFile.toFile());
-            ArrayNode steps = (ArrayNode) root.get("steps");
+            JsonNode root = mapper.readTree(scriptFile.toFile());  // Load JSON
+            ArrayNode steps = (ArrayNode) root.get("steps"); // Extract steps
 
             System.out.println("[SCRIPT] " + scriptFile.getFileName()+ " | Total Steps: " + steps.size());
-
-            //Build map: step description -> locator
-            Map<String, String> stepToLocatorMap = buildStepLocatorMap(root);
-            System.out.println("Total Step to Locator Mappings : " + stepToLocatorMap.size());
 
             //Extract step descriptions from script
             List<String> scriptSteps = new ArrayList<>();
@@ -58,56 +54,40 @@ public class ScriptProcessor {
             }
 
             System.out.println("Step Sequence Matched At Index : " + startIndex);
-            //Replace sequence ONCE using ALL replacements
             System.out.println("Replacing Step Sequence...");
+
+            // 1. Replace step sequence
             StepSequenceReplacer.replaceSequence(
                     steps,
                     startIndex,
+                    matchRows,
                     replacements
             );
 
-            //Update XPath ONLY for rows having Old Steps
-            for (Replacement r : matchRows) {
-                if (r.relativeXpath != null && !r.relativeXpath.trim().isEmpty()) {
-                    String locatorKey = stepToLocatorMap.get(r.currentStep.trim());
-                    if (locatorKey != null) {
-                        System.out.println("Updating RelXpath For Locator : " + locatorKey);
-                        RelXpathUpdater.update(root, locatorKey, r.relativeXpath);
+            // 2. Rebuild eventsList (safe reuse)
+            EventsListBuilder.rebuild(
+                    (ObjectNode) root,
+                    steps,
+                    replacements
+            );
 
-                        xpathCount.incrementAndGet(); //Update total relative xpaths modified
-                    } else {
-                        System.out.println("Locator Not Found For Step : " + r.currentStep);
-                    }
-                }
-            }
+            // 3. UPDATE OBJECTS MAP (THIS IS THE ONLY PLACE)
+            ObjectsMapBuilder.update(
+                    (ObjectNode) root,
+                    replacements
+            );
 
-            //Save updated JSON
+            // 4. Save JSON
             mapper.writerWithDefaultPrettyPrinter()
                     .writeValue(scriptFile.toFile(), root);
 
-            modifiedScripts.add(scriptFile.getFileName().toString());
+            modifiedScripts.add(scriptFile.getFileName().toString()); // Record modified script
+
             System.out.println("[SUCCESS] Script Updated Successfully.");
 
         } catch (Exception e) {
             System.err.println("[ERROR] Failed to process script : " + scriptFile.getFileName());
             System.err.println("[ERROR] Reason : " + e.getMessage());
         }
-    }
-
-    //Building step → locator mapping from eventsList
-    private static Map<String, String> buildStepLocatorMap(JsonNode root) {
-
-        Map<String, String> map = new HashMap<>();
-        JsonNode eventsList = root.get("eventsList");
-
-        if (eventsList != null && eventsList.isArray()) {
-            for (JsonNode event : eventsList) {
-                map.put(
-                        event.get("line").asText().trim(),
-                        event.get("locator").asText().trim()
-                );
-            }
-        }
-        return map;
     }
 }

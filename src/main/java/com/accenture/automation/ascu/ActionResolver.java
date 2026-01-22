@@ -56,6 +56,6 @@ public class ActionResolver {
             }
         }
 
-        throw new RuntimeException("[ACTION][ERROR] No Matching Action Found For Step: " + stepDescription);
+         return "DEFAULT";
     }
 }

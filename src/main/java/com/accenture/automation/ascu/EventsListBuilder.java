@@ -31,10 +31,9 @@ public class EventsListBuilder {
                 System.out.println("Reusing Existing Event For: " + desc);
             }
 
-            event.put("stepNo", i);
-            event.put("line", desc);
+            ObjectNode normalized = normalizeEvent(root, event, i, desc);
+            newEvents.add(normalized);
 
-            newEvents.add(event);
         }
     }
 
@@ -108,5 +107,30 @@ public class EventsListBuilder {
             sb.append(chars.charAt(r.nextInt(chars.length())));
         }
         return sb.toString();
+    }
+
+    // Normalize event structure and add line field
+
+    private static ObjectNode normalizeEvent(
+            ObjectNode root,
+            ObjectNode e,
+            int stepNo,
+            String line) {
+
+        ObjectNode n = root.objectNode();
+
+        n.put("stepNo", stepNo);
+        n.put("stepId", e.path("stepId").asText());
+        n.put("action", e.path("action").asText());
+        n.put("data", e.path("data").asText());
+        n.put("locator", e.path("locator").asText());
+        n.put("displayName", e.path("displayName").asText());
+        n.put("scroll", e.path("scroll").asBoolean());
+        n.put("skip", e.path("skip").asBoolean());
+        n.put("userActionWord", e.path("userActionWord").asText());
+        n.put("line", line);
+        n.put("selfHealingName", e.path("selfHealingName").asText());
+
+        return n;
     }
 }

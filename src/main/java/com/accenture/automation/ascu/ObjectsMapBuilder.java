@@ -1,7 +1,8 @@
 package com.accenture.automation.ascu;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.List;
+import java.util.*;
 
 public class ObjectsMapBuilder {
 
@@ -9,52 +10,84 @@ public class ObjectsMapBuilder {
             ObjectNode root,
             List<Replacement> replacements) {
 
-        ObjectNode objectsMap = root.withObject("objectsMap");
+        ObjectNode objectsMap;
+
+        JsonNode existing = root.get("objectsMap");
+        if (existing != null && existing.isObject()) {
+            objectsMap = (ObjectNode) existing;
+        } else {
+            objectsMap = root.putObject("objectsMap");
+        }
 
         System.out.println("[OBJECTSMAP] Updating objectsMap...");
 
+        // Collect locators to REMOVE (old steps)
+        Set<String> locatorsToRemove = new HashSet<>();
+
+        // Collect locators to ADD / UPDATE (new steps)
+        Map<String, String> locatorsToAdd = new LinkedHashMap<>();
+
         for (Replacement r : replacements) {
 
-            if (r.relativeXpath == null || r.relativeXpath.trim().isEmpty()) {
-                continue;
+            // OLD step → mark for removal
+            if (hasText(r.currentStep)) {
+                String oldLocator = extractLocator(r.currentStep);
+                if (hasText(oldLocator)) {
+                    locatorsToRemove.add(oldLocator);
+                }
             }
 
-            // Prefer newStep, fallback to currentStep
-            String stepDesc =
-                    (r.newStep != null && !r.newStep.isEmpty())
-                            ? r.newStep
-                            : r.currentStep;
-
-            String locator = extractLocator(stepDesc);
-
-            if (locator == null || locator.isEmpty()) {
-                System.out.println("Locator Not found For Step: " + stepDesc);
-                continue;
+            // NEW step → mark for add/update
+            if (hasText(r.newStep) && hasText(r.relativeXpath)) {
+                String newLocator = extractLocator(r.newStep);
+                if (hasText(newLocator)) {
+                    locatorsToAdd.put(newLocator, r.relativeXpath.trim());
+                }
             }
+        }
 
-            ObjectNode obj = objectsMap.withObject(locator);
+        // REMOVE old locators
+        for (String locator : locatorsToRemove) {
+            if (objectsMap.has(locator)) {
+                objectsMap.remove(locator);
+                System.out.println("[OBJECTSMAP] Removed old locator: " + locator);
+            }
+        }
 
-            // Ensure essential fields exist
+        // ADD / UPDATE new locators
+        for (Map.Entry<String, String> entry : locatorsToAdd.entrySet()) {
+
+            String locator = entry.getKey();
+            String relXpath = entry.getValue();
+
+            ObjectNode obj = objectsMap.has(locator)
+                    ? (ObjectNode) objectsMap.get(locator)
+                    : objectsMap.putObject(locator);
+
             obj.putIfAbsent("id", obj.textNode(""));
             obj.putIfAbsent("name", obj.textNode(""));
             obj.putIfAbsent("xpath", obj.textNode(""));
+            obj.put("relXpath", relXpath);
 
-            // Update relXpath
-            obj.put("relXpath", r.relativeXpath.trim());
-
-            System.out.println("relXpath updated for locator: " + locator);
+            AutomationStepChangeUtility.totalRelXpathModified.incrementAndGet();
+            System.out.println("[OBJECTSMAP] Updated locator: " + locator);
         }
     }
 
-    // ---------------- HELPER METHODS ----------------
-    private static String extractLocator(String desc) {  // Extract text within single quotes
-        if (desc == null) return null;
+    // ---------------- helpers ----------------
+
+    private static boolean hasText(String s) {
+        return s != null && !s.trim().isEmpty();
+    }
+
+    private static String extractLocator(String desc) {
+        if (!hasText(desc)) return null;
 
         int a = desc.indexOf("'");
         int b = desc.lastIndexOf("'");
 
-        if (a != -1 && b > a) { 
-            return desc.substring(a + 1, b)    // Extract text within single quotes
+        if (a != -1 && b > a) {
+            return desc.substring(a + 1, b)
                     .trim()
                     .replace(" ", "_");
         }

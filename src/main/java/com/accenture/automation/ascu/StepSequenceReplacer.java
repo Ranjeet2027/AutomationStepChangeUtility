@@ -9,61 +9,53 @@ public class StepSequenceReplacer {
     public static void replaceSequence(
             ArrayNode steps,
             int startIndex,
-            List<Replacement> replacements) {
+            List<Replacement> matchRows,   // ONLY rows with Current Steps
+            List<Replacement> allRows) {   // ALL CSV rows
 
         ArrayNode newSteps = steps.arrayNode();
 
-        int cursor = startIndex;
+        for (Replacement r : matchRows) {
+            ObjectNode step = steps.objectNode();
+            step.put(
+                "description",
+                r.newStep != null && !r.newStep.trim().isEmpty()
+                    ? r.newStep
+                    : r.currentStep
+            );
+            newSteps.add(step);
+        }
 
-        for (Replacement r : replacements) {
 
-            //Old + New → replace
-            if (hasText(r.currentStep) && hasText(r.newStep)) {
-                ObjectNode step = steps.objectNode();
-                step.put("description", r.newStep);
-                newSteps.add(step);
-                cursor++;
-            }
-
-            //Old only → keep original
-            else if (hasText(r.currentStep)) {
-                newSteps.add(steps.get(cursor));
-                cursor++;
-            }
-
-            // Case New only → insert extra
-            else if (hasText(r.newStep)) {
+        // Insert NEW-ONLY rows (like R3)
+        for (Replacement r : allRows) {
+            if (r.currentStep == null || r.currentStep.trim().isEmpty()) {
                 ObjectNode step = steps.objectNode();
                 step.put("description", r.newStep);
                 newSteps.add(step);
             }
         }
 
-        // Remove old matched steps
-        for (int i = 0; i < replacements.size(); i++) {
+        // REMOVE ONLY matched old steps (THIS FIXES YOUR BUG)
+        for (int i = 0; i < matchRows.size(); i++) {
             steps.remove(startIndex);
         }
 
-        // Insert rebuilt steps
+        // INSERT rebuilt steps
         for (int i = 0; i < newSteps.size(); i++) {
             steps.insert(startIndex + i, newSteps.get(i));
         }
 
-        // Recalculate stepNo AND normalize field order
+        // Re-number stepNo AND normalize field order
         for (int i = 0; i < steps.size(); i++) {
 
             ObjectNode oldStep = (ObjectNode) steps.get(i);
             String description = oldStep.get("description").asText();
 
-            ObjectNode newStep = steps.objectNode();
-            newStep.put("stepNo", i);
-            newStep.put("description", description);
+            ObjectNode normalized = steps.objectNode();
+            normalized.put("stepNo", i);
+            normalized.put("description", description);
 
-            steps.set(i, newStep);
+            steps.set(i, normalized);
         }
-    }
-
-    private static boolean hasText(String s) {
-        return s != null && !s.trim().isEmpty();
     }
 }
