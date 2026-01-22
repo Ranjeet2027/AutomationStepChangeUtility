@@ -1,3 +1,4 @@
-﻿Current Steps,New Steps,Relative Xpath
-SFClick on the 'Ranjeet 2',SFClick on the 'Ranjeet 2',(//*)[1]
-SFClick on the 'Ranjeet 3',SFClick on the 'Ranjeet 3',(//*)[1]
+﻿Current Steps,New Steps,Relative Xpath,Scroll Flag,Skip Flag
+SFClick on the 'Shopping Cart',SFClick on the 'R1',(//*[text()='R1'])[1],,
+SFClick on the 'Checkout',SFClick on the 'R2',(//*[text()='R2'])[1],,
+,SFClick on the 'R3',(//*[text()='R3'])[1],,

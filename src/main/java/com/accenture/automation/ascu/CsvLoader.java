@@ -18,7 +18,7 @@ public class CsvLoader {
             System.out.println("[WARN] CSV File Not Found. Creating A Sample CSV At: " + csvFile);
 
             try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-                writer.write("Old Steps,New Steps,Xpath\n");
+                writer.write("Current Steps,New Steps,Relative Xpath\n");
                 writer.write("<<CURRENT STEP HERE>>,<<NEW STEP HERE>>,<<RELATIVE XPATH HERE>>\n");
             }
             System.out.println("Sample CSV Created Successfully");
@@ -43,11 +43,8 @@ public class CsvLoader {
 
             try (CSVParser parser = format.parse(reader)) {
 
-                //int rowNumber = 1;
-
                 for (CSVRecord record : parser) {
 
-                    //System.out.println("\nProcessing row #" + rowNumber);
                     Map<String, String> cleaned = new HashMap<>();
                     for (Map.Entry<String, String> e : record.toMap().entrySet()) {
                         cleaned.put(
@@ -67,6 +64,8 @@ public class CsvLoader {
                     String currentStep = cleaned.get("Current Steps");
                     String newStep = cleaned.get("New Steps");
                     String relativeXpath   = cleaned.get("Relative Xpath");
+                    boolean scroll = "true".equalsIgnoreCase(cleaned.get("Scroll Flag").trim());
+                    boolean skip   = "true".equalsIgnoreCase(cleaned.get("Skip Flag").trim());
 
                     if ((newStep == null || newStep.trim().isEmpty())
                             && (relativeXpath == null || relativeXpath.trim().isEmpty())) {
@@ -76,7 +75,7 @@ public class CsvLoader {
                                 "CSV Row Must Have Either New Steps or Relative Xpath");
                     }
 
-                    list.add(new Replacement(currentStep, newStep, relativeXpath));
+                    list.add(new Replacement(currentStep, newStep, relativeXpath, scroll, skip));
                 }
             }
         }

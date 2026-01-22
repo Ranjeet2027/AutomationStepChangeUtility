@@ -31,7 +31,7 @@ public class RelXpathUpdater {
         System.out.println("[XPATH] New RelXpath Value : " + finalXpath);
         System.out.println("[XPATH] Updating RelXpath...");
 
-        ((ObjectNode) objNode).put("RelXpath", finalXpath);
+        ((ObjectNode) objNode).put("relXpath", finalXpath);
 
         System.out.println("[XPATH] RelXpath Updated Successfully");
     }
