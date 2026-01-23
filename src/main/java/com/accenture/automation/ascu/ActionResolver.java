@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ActionResolver {
 
-    private static final String ACTION_FILE = "C:/Self_Healing_Test_Automation/Self_Healing_Test_Automation/WORK/TestProjectGeneric/config/customAction.properties";
+    private static final String ACTION_FILE = "C:/Self_Healing_Test_Automation/Self_Healing_Test_Automation/WORK/TestProjectGeneric/config/keywordMatching-WP.properties";
 
     private static final Map<String, String> actionMap = new LinkedHashMap<>();
 
@@ -26,8 +26,8 @@ public class ActionResolver {
                     continue;
                 }
 
-                // Left side of '=' is the action
-                String action = line.split("=", 2)[0].trim();
+                // Right side of '=' is the action
+                String action = line.split("=", 2)[1].trim();
 
                 actionMap.put(action.toLowerCase(), action);
             }
@@ -40,8 +40,8 @@ public class ActionResolver {
         }
     }
 
-    //THIS METHOD NAME MATCHES EventsListBuilder
-    public static String resolveAction(String stepDescription) {
+    // Resolve action based on step description
+    public static String resolveAction(String stepDescription) {   
 
         if (stepDescription == null || stepDescription.trim().isEmpty()) {
             return "DEFAULT";

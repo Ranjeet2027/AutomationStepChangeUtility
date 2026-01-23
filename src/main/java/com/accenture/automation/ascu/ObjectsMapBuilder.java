@@ -67,9 +67,16 @@ public class ObjectsMapBuilder {
             obj.putIfAbsent("id", obj.textNode(""));
             obj.putIfAbsent("name", obj.textNode(""));
             obj.putIfAbsent("xpath", obj.textNode(""));
-            obj.put("relXpath", relXpath);
+            String newXpath = relXpath.trim();
+            String oldXpath = obj.has("relXpath") ? obj.get("relXpath").asText() : "";
 
-            AutomationStepChangeUtility.totalRelXpathModified.incrementAndGet();
+            if (!newXpath.equals(oldXpath)) {
+                obj.put("relXpath", newXpath);
+                AutomationStepChangeUtility.totalRelXpathModified.incrementAndGet();
+            }
+
+            // obj.put("relXpath", relXpath);
+            // AutomationStepChangeUtility.totalRelXpathModified.incrementAndGet();
             System.out.println("[OBJECTSMAP] Updated locator: " + locator);
         }
     }
