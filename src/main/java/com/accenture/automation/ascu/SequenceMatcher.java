@@ -22,9 +22,16 @@ public class SequenceMatcher {
             boolean match = true;
 
             for (int j = 0; j < seqSize; j++) {
-                if (!scriptSteps.get(i + j)
-                        .equals(replacements.get(j).currentStep.trim())) {
-                    //System.out.println("[MISMATCH] Sequence Broken At Offset " + j);
+                // if (!scriptSteps.get(i + j)
+                //         .equals(replacements.get(j).currentStep.trim())) {
+                //     //System.out.println("[MISMATCH] Sequence Broken At Offset " + j);
+                //     match = false;
+                //     break;
+
+                String scriptStepNorm = normalizeStep(scriptSteps.get(i + j));
+                String csvStepNorm = normalizeStep(replacements.get(j).currentStep.trim());
+
+                if (!scriptStepNorm.equals(csvStepNorm)) {
                     match = false;
                     break;
                 } else {
@@ -39,5 +46,13 @@ public class SequenceMatcher {
 
         System.out.println("No Matching Step Sequence Found In Script.");
         return -1;
+    }
+    
+
+    private static String normalizeStep(String step) {
+        if (step == null) return "";
+
+        // Remove everything inside double quotes
+        return step.replaceAll("\"[^\"]*\"", "\"@DATA@\"").trim();
     }
 }

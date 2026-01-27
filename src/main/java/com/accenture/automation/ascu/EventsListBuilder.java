@@ -57,7 +57,13 @@ public class EventsListBuilder {
 
         String locatorText = extractSingle(desc);
         String locator = locatorText.replace(" ", "_");
-        String data = extractDouble(desc);
+        
+        //String data = extractDouble(desc);
+        String rawData = extractDouble(desc);
+        String data = "";
+        if (!rawData.isEmpty()) {
+            data = "${${" + rawData.replaceAll("[${}]", "") + "}}";
+        }
 
         String action = ActionResolver.resolveAction(desc);
         Replacement r = findReplacement(desc, replacements);
@@ -65,7 +71,8 @@ public class EventsListBuilder {
         ObjectNode e = root.objectNode();
         e.put("stepId", randomId(20));
         e.put("action", action);
-        e.put("data", data.isEmpty() ? "" : "${" + data + "}");
+        e.put("data", data);
+        //e.put("data", data.isEmpty() ? "" : "${" + data + "}");
         e.put("locator", locator);
         e.put("displayName", "'" + locatorText + "'");
         e.put("scroll", r != null && r.scroll);

@@ -18,9 +18,11 @@ public class StepSequenceReplacer {
             ObjectNode step = steps.objectNode();
             step.put(
                 "description",
+                normalizeStep(
                 r.newStep != null && !r.newStep.trim().isEmpty()
                     ? r.newStep
                     : r.currentStep
+                )
             );
             newSteps.add(step);
         }
@@ -30,7 +32,9 @@ public class StepSequenceReplacer {
         for (Replacement r : allRows) {
             if (r.currentStep == null || r.currentStep.trim().isEmpty()) {
                 ObjectNode step = steps.objectNode();
-                step.put("description", r.newStep);
+                //step.put("description", r.newStep);
+                step.put("description", normalizeStep(r.newStep));
+
                 newSteps.add(step);
             }
         }
@@ -58,4 +62,11 @@ public class StepSequenceReplacer {
             steps.set(i, normalized);
         }
     }
+
+    private static String normalizeStep(String step) {
+        if (step == null) return null;
+
+        return step.replaceAll("\"([^\"]+)\"", "\"\\${$1}\"");
+    }
+
 }

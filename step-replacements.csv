@@ -1,4 +1,4 @@
 ﻿Current Steps,New Steps,Relative Xpath,Scroll Flag,Skip Flag
-SFClick on the 'Shopping Cart',SFClick on the 'R1',(//*[text()='R1'])[1],,
-SFClick on the 'Checkout',SFClick on the 'R2',(//*[text()='R2'])[1],,
+"SFEnter the 'UserName' as ""standard_user""","SFEnter the 'UserName' as ""R1""",(//*[text()='R1'])[1],,
+,"SFEnter the 'Password' as ""R1""",(//*[text()='R2'])[1],,
 ,SFClick on the 'R3',(//*[text()='R3'])[1],,

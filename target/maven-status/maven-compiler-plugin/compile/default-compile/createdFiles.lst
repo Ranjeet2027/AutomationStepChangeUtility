@@ -5,6 +5,7 @@ com\accenture\automation\ascu\ObjectsMapBuilder.class
 com\accenture\automation\ascu\Replacement.class
 com\accenture\automation\ascu\SequenceMatcher.class
 com\accenture\automation\ascu\StepUpdater.class
+com\accenture\automation\ascu\DatasetListUpdater.class
 com\accenture\automation\ascu\ActionResolver.class
 com\accenture\automation\ascu\AutomationStepChangeUtility.class
 com\accenture\automation\ascu\StepSequenceReplacer.class

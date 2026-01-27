@@ -23,7 +23,7 @@ public class AutomationStepChangeUtility {
 
         try {
             CsvLoader.createCsvIfMissing(CSV_FILE);
-            List<Replacement> replacements = CsvLoader.loadReplacements(CSV_FILE);
+            List<Replacement> replacements = CsvLoader.loadReplacements(CSV_FILE); // Load The Row from CSV For Replacements
 
             if (replacements.isEmpty()) {
                 System.out.println("No Step Replacements Found. Exiting utility.");
@@ -31,7 +31,7 @@ public class AutomationStepChangeUtility {
                 return;
             }
 
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper();  // ObjectMapper is Jackson's class for JSON processing creating object of it
             Set<String> modifiedScripts = new HashSet<>();
 
             //Scan and process each script in the scripts directory
@@ -49,7 +49,7 @@ public class AutomationStepChangeUtility {
             LogGenerator.generate(LOG_FILE, modifiedScripts);
 
             System.out.println("==================================================");
-            System.out.println(" Automation Step Change Utility Executed Successfully.");
+            System.out.println("Automation Step Change Utility Executed Successfully.");
             //System.out.println(" Total Scripts Modified : " + modifiedScripts.size());
             System.out.println("Total Modified Scripts        : " + modifiedScripts.size());
             System.out.println("Relative Xpath Modified Across Scripts: " + totalRelXpathModified.get());

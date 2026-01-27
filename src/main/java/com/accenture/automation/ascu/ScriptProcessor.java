@@ -71,6 +71,14 @@ public class ScriptProcessor {
                     replacements
             );
 
+
+            // Update datasetList
+            DatasetListUpdater.update(
+                    (ObjectNode) root,
+                    replacements
+            );
+
+
             // 3. UPDATE OBJECTS MAP (THIS IS THE ONLY PLACE)
             ObjectsMapBuilder.update(
                     (ObjectNode) root,
